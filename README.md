@@ -1,20 +1,73 @@
-STUDENT MANAGEMENT SYETEM
-DAY 1:
-  1: created a student managemt system with the help of django and DRF in which i created app called student_records.
-  2: in student records i created a model call Student which have three fields
-      1: name(fieldtype:char)
-      2: age(fieldtype:int)
-      3: email(fieldtpye:email)
-  3 i created a view in which i created two api one to get the data and one to post the data
-  4: two learn about i created two types of function based and class based 
-  5: api names:
-      1: Student_details  : it is a function based api
-      2: StudentDetailsPost : it is class based api
+# Student Management System
 
-  6: create url pattern to call those api in urls.py
-  7: to call those api i used POSTMAN 
-      1: to get the list of student i used get request method  and url to get the data 
-      2: to post the data i used post request method and type jason raw type data in body section of postman 
-  8: 1: i learn somthing extra also like in my api part i manually type to get data in json format but to avoid it make code more readable and stable we can use serializer
-    2: serializer is used to convert complex data types like Django model instances or querysets into native Python data types (such as dictionaries, lists, etc.) that can then be easily rendered into formats like JSON, XML, or others. This is essential for working with APIs in Django, especially with Django Rest Framework (DRF)
-     
+A basic Student Management System built using **Django** and **Django Rest Framework (DRF)**. This project demonstrates creating and managing APIs using both Function-Based Views (FBV) and Class-Based Views (CBV).
+
+---
+
+## 📅 Day 1 Progress
+
+### ✅ Project Setup
+- Created a Django project named **Student Management System**.
+- Created an app called `student_records`.
+
+### 📦 Student Model
+Defined a `Student` model with the following fields:
+- `name` (type: `CharField`)
+- `age` (type: `IntegerField`)
+- `email` (type: `EmailField`)
+
+### 🔧 APIs for Student
+Created two APIs to handle student data:
+
+1. **Function-Based View**:  
+   `Student_details` – Fetches the list of students via GET request.
+
+2. **Class-Based View**:  
+   `StudentDetailsPost` – Allows posting student data to the database via POST request.
+
+### 🌐 URL Routing
+- Configured `urls.py` to route to both APIs.
+
+### 🧪 Testing APIs with Postman
+- **GET Request**: Fetch student list using `Student_details` endpoint.
+- **POST Request**: Submit student data in JSON format using the raw body in Postman to the `StudentDetailsPost` endpoint.
+
+---
+
+## 📚 Learning Note
+
+### 🔄 Serializers in DRF
+Initially, data was manually returned in JSON format. Later, DRF **serializers** were implemented for cleaner and more maintainable code.
+
+**Serializer Functionality:**
+- Convert complex data types like Django models into native Python datatypes.
+- Easily render output into JSON.
+- Validate incoming data.
+- Deserialize JSON into Django model instances.
+
+---
+
+## 📘 Course Model
+
+### 🛠️ Course Model Fields:
+- `course_name` (type: `CharField`)
+- `course_code` (type: `CharField`)
+
+### 🔧 APIs for Course
+Created two APIs similar to the student model:
+
+1. **Function-Based View**:  
+   `course_Details` – Fetches the list of courses.
+
+2. **Class-Based View**:  
+   `CourseDetailsPost` – Allows posting course data to the database.
+
+---
+
+## 🛠️ Tools & Technologies
+- Python 3.12
+- Django 5.2
+- Django REST Framework
+- Postman (for API testing)
+
+---
