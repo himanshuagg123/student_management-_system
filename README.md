@@ -1,6 +1,6 @@
 # Student Management System
 
-A basic Student Management System built using **Django** and **Django Rest Framework (DRF)**. This project demonstrates creating and managing APIs using both Function-Based Views (FBV) and Class-Based Views (CBV).
+A basic Student Management System built using **Django** and **Django Rest Framework (DRF)**.
 
 ---
 
