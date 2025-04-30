@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Student,Course
+from .models import Student,Course,Teacher
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -17,7 +17,8 @@ def Student_Details(request):
             'id': student.id,
             'name': student.name,
             'age': student.age,
-            'email': student.email
+            'email': student.email,
+            'courses': list(student.courses.values('id', 'course_name'))  
     
     })
         # Return the list of students as a Response object
@@ -29,7 +30,11 @@ class StudentDetailsPost(APIView): #class based api
 
             Student_Create = Student.objects.create(name=data['name'],age=data['age'],email=data['email'])
 
-            return Response({'id': Student_Create.id, 'name': Student_Create.name , 'age': Student_Create.age, 'email': Student_Create.email},status=201)
+            if 'courses' in data:
+                courses = Course.objects.filter(id__in=data['courses'])  # Get the courses by ID
+                Student_Create.courses.set(courses) 
+
+            return Response({'id': Student_Create.id, 'name': Student_Create.name , 'age': Student_Create.age, 'email': Student_Create.email, 'courses': [course.id for course in Student_reate.courses.all()]},status=201)
 
 # Create your views here.
 
@@ -60,3 +65,31 @@ class CoursetDetailsPost(APIView): #class based api
                              'course_name': Course_Create.course_name, 
                              'Course_code': Course_Create.course_code}, status=201)
 
+@api_view(['GET'])
+def Teacher_Details(request):
+    teacher_list = Teacher.objects.all() # Fetching all students from the database
+
+    teacher_data = [] 
+    for teacher in teacher_list:
+        teacher_data.append({
+            'id': teacher.id,
+            'name': teacher.teacher_name,
+           
+            # 'courses': list(student.courses.values('id', 'course_name'))  
+    
+    })
+        # Return the list of students as a Response object
+    return Response(teacher_data)
+
+class teacherDetailsPost(APIView): #class based api
+    def post(self, request): #request method psot
+        if request.method == 'POST': 
+            data = json.loads(request.body.decode('utf-8')) 
+
+            Teacher_Create = Teacher.objects.create(teacher_name=data['teacher_name'])
+
+            # if 'courses' in data:
+            #     courses = Course.objects.filter(id__in=data['courses'])  # Get the courses by ID
+            #     Student_Create.courses.set(courses) 
+
+            return Response({'id': Teacher_Create.id, 'teacher_name': Teacher_Create.teacher_name},status=201)
