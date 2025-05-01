@@ -4,7 +4,7 @@ A basic Student Management System built using **Django** and **Django Rest Frame
 
 ---
 
-## 📅 Day 1 Progress
+
 
 ### ✅ Project Setup
 - Created a Django project named **Student Management System**
