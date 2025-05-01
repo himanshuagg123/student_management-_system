@@ -11,8 +11,8 @@ import json
 def Student_Details(request):
     students_list = Student.objects.all() # Fetching all students from the database
 
-    student_data = [] 
-    for student in students_list:
+    student_data = [] #list to store all data from database
+    for student in students_list: # loop to student list to store all data to student_data list
         student_data.append({
             'id': student.id,
             'name': student.name,
@@ -25,25 +25,25 @@ def Student_Details(request):
     return Response(student_data)
 class StudentDetailsPost(APIView): #class based api
     def post(self, request): #request method psot
-        if request.method == 'POST': 
-            data = json.loads(request.body.decode('utf-8')) 
+        if request.method == 'POST':  
+            data = json.loads(request.body.decode('utf-8'))  #load json request to data 
 
-            Student_Create = Student.objects.create(name=data['name'],age=data['age'],email=data['email'])
+            Student_Create = Student.objects.create(name=data['name'],age=data['age'],email=data['email']) #this line create a new  row in our student table in database
 
-            if 'courses' in data:
+            if 'courses' in data: #if courses is present in data it will store in student table
                 courses = Course.objects.filter(id__in=data['courses'])  # Get the courses by ID
                 Student_Create.courses.set(courses) 
 
-            return Response({'id': Student_Create.id, 'name': Student_Create.name , 'age': Student_Create.age, 'email': Student_Create.email, 'courses': [course.id for course in Student_reate.courses.all()]},status=201)
+            return Response({'id': Student_Create.id, 'name': Student_Create.name , 'age': Student_Create.age, 'email': Student_Create.email, 'courses': [course.id for course in Student_Create.courses.all()]},status=201) # this will return the student details
 
-# Create your views here.
+
 
 @api_view(['GET']) #function based api
 def Course_Details(request):
     course_list = Course.objects.all() # Fetching all students from the database
 
-    Course_data = [] 
-    for course in course_list:
+    Course_data = [] # empty course_list 
+    for course in course_list: #storing all course_list data in  course_data list in json format
         Course_data.append({
             'id': course.id,
             'course_name': course.course_name,
@@ -52,7 +52,7 @@ def Course_Details(request):
     
     })
         # Return the list of students as a Response object
-    return Response(Course_data)
+    return Response(Course_data) # returning the course_data list as get request in json format
 
 class CoursetDetailsPost(APIView): #class based api
     def post(self, request): #request method psot
@@ -74,6 +74,9 @@ def Teacher_Details(request):
         teacher_data.append({
             'id': teacher.id,
             'name': teacher.teacher_name,
+            'courses': list(teacher.courses.values('id', 'course_name'))  
+
+
            
             # 'courses': list(student.courses.values('id', 'course_name'))  
     
@@ -88,8 +91,8 @@ class teacherDetailsPost(APIView): #class based api
 
             Teacher_Create = Teacher.objects.create(teacher_name=data['teacher_name'])
 
-            # if 'courses' in data:
-            #     courses = Course.objects.filter(id__in=data['courses'])  # Get the courses by ID
-            #     Student_Create.courses.set(courses) 
+            if 'courses' in data:
+                courses = Course.objects.filter(id__in=data['courses'])  # Get the courses by ID
+                Teacher_Create.courses.set(courses) 
 
-            return Response({'id': Teacher_Create.id, 'teacher_name': Teacher_Create.teacher_name},status=201)
+            return Response({'id': Teacher_Create.id, 'teacher_name': Teacher_Create.teacher_name, 'courses': [course.id for course in Teacher_Create.courses.all()]},status=201)
