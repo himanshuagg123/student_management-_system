@@ -13,11 +13,11 @@ class Course(models.Model):
     
 # student model to create student  
 class Student(models.Model):
-    
+
     #here we type the name of the Student and which have fieldtype : char and has MAX_LENGTH=100
     name = models.CharField(max_length=100)
 
-     # To store type the age of student fieldtype :  int 
+     # herw we  type the age of student fieldtype :  int 
     age = models.IntegerField() 
 
     #manytomany field to assign courses to student 
