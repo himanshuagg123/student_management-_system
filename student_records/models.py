@@ -2,7 +2,7 @@ from django.db import models
 
 # Course model
 class Course(models.Model):
-    course_name = models.CharField(max_length=100)
+    course_name = models.CharField(max_length=100,unique=True)
     course_code = models.CharField(max_length=10, unique=True)  # Ensure unique courses
 
     def __str__(self):
@@ -20,7 +20,7 @@ class Student(models.Model):
 
 # Teacher model
 class Teacher(models.Model):
-    teacher_name = models.CharField(max_length=100,unique= tru)
+    teacher_name = models.CharField(max_length=100,unique=True)
     courses = models.ManyToManyField(Course)
 
     def __str__(self):
