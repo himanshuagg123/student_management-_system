@@ -1,14 +1,14 @@
 from django.urls import path
-from .views import Student_Details
-from .views import StudentDetailsPost,Course_Details,CoursetDetailsPost,TeacherDetailsPost,Teacher_Details
+from .views import StudentListView, CourseListView, TeacherListView, CourseDetailView, StudentDetailView, TeacherDetailView
 
 urlpatterns = [
-    path('student_details/', Student_Details),
-    path('student_create/', StudentDetailsPost.as_view()),
-
-    path('course_details/', Course_Details),
-    path('course_create/', CoursetDetailsPost.as_view()),
+    # List views
+    path('students/', StudentListView.as_view()),  # List of all students
+    path('courses/', CourseListView.as_view()),  # List of all courses
+    path('teachers/', TeacherListView.as_view()),  # List of all teachers
     
-    path('teacher_details/', Teacher_Details),
-    path('teacher_create/', TeacherDetailsPost.as_view())
+    # Detail views
+    path('courses/<int:pk>/', CourseDetailView.as_view()),  
+    path('students/<int:pk>/', StudentDetailView.as_view()),  
+    path('teachers/<int:pk>/', TeacherDetailView.as_view()),  
 ]

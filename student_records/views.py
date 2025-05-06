@@ -4,8 +4,16 @@ from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from .models import Student, Course, Teacher
 from .serializers import StudentSerializer, CourseSerializer, TeacherSerializer
+from django.db import IntegrityError
 
 # List & Create Views
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.generics import get_object_or_404
+from .models import Student, Course, Teacher
+from .serializers import StudentSerializer, CourseSerializer, TeacherSerializer
+
 class StudentListView(APIView):
     def get(self, request):
         students = Student.objects.all()
@@ -13,11 +21,27 @@ class StudentListView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        
+        validation_error = self.validate_roll_number(request.data.get('roll_number'))
+        if validation_error:
+            return Response(
+                {"error": validation_error},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # If no validation errors, proceed with saving the student
         serializer = StudentSerializer(data=request.data)
         if serializer.is_valid():
             student = serializer.save()
             return Response(StudentSerializer(student).data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def validate_roll_number(self, roll_number):
+       
+        if Student.objects.filter(roll_number=roll_number).exists():
+            return ("A student with this roll number already exists in the database.")
+        return None
 
 class CourseListView(APIView):
     def get(self, request):
@@ -26,11 +50,22 @@ class CourseListView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        validation_error = self.validate_course(request.data.get('course_code'))
+        if validation_error:
+            return Response(
+                {"error": validation_error},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         serializer = CourseSerializer(data=request.data)
         if serializer.is_valid():
             course = serializer.save()
             return Response(CourseSerializer(course).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def validate_course(self, course_code):
+        
+        if Course.objects.filter(course_code=course_code).exists():
+            return "A course with this course_code already exists in the database."
+        return None
 
 class TeacherListView(APIView):
     def get(self, request):
@@ -39,11 +74,25 @@ class TeacherListView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        validation_error = self.validate_email(request.data.get('email_id'))
+        if validation_error:
+            return Response(
+                {"error": validation_error},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
         serializer = TeacherSerializer(data=request.data)
         if serializer.is_valid():
             teacher = serializer.save()
             return Response(TeacherSerializer(teacher).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def validate_email(self, email_id):
+        
+        if Teacher.objects.filter(email_id=email_id).exists():
+            return "A teacher with this email_id already exists in the database."
+        return None
+
 
 # Detail Views for Update and Delete
 class StudentDetailView(APIView):
