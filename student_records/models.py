@@ -1,39 +1,28 @@
 from django.db import models
-# course model to register courses
+
+# Course model
 class Course(models.Model):
-
-    #add course name(fieldtpye : char) 
-    course_name = models.CharField(max_length=100)
-
-    #course code(fieldtpye : char)
-    course_code = models.CharField(max_length=10) 
+    course_name = models.CharField(max_length=100, unique=True)
+    course_code = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
-        return self.name
-    
-# student model to create student  
+        return self.course_name
+
+# Student model with roll_number instead of student_id
 class Student(models.Model):
-
-    #here we type the name of the Student and which have fieldtype : char and has MAX_LENGTH=100
+    roll_number = models.CharField(max_length=20, unique=True,default="0000")  # Changed to roll_number
     name = models.CharField(max_length=100)
-
-     # herw we  type the age of student fieldtype :  int 
-    age = models.IntegerField() 
-
-    #manytomany field to assign courses to student 
-    courses = models.ManyToManyField(Course) 
+    age = models.IntegerField()
+    courses = models.ManyToManyField(Course)
 
     def __str__(self):
         return self.name
 
-# Teacher model to assign  name and course to the teacher
-class Teacher(models.Model): 
-    #assign teacher name 
-    teacher_name = models.CharField(max_length=100) 
+# Teacher model
+class Teacher(models.Model):
+    teacher_name = models.CharField(max_length=100)
+    email_id = models.EmailField(max_length=100, unique=True,default='no-email@example.com')
+    courses = models.ManyToManyField(Course)
 
-    #used manytomany field to assign courses to teacher
-    courses = models.ManyToManyField(Course) 
-    
     def __str__(self):
-        return self.name
-
+        return self.teacher_name
