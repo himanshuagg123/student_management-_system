@@ -4,7 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
+# Quick-start development settin.duckdns.orggs - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-gdr%y)dd_+i&$#8!wf7zgd7mq8t=id0k@sq^skp6_lb8)tou54
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['himanshuprojects.duckdns.org','51.20.128.222',]
 
 
 # Application definition
