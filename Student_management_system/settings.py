@@ -3,21 +3,19 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settin.duckdns.orggs - unsuitable for production
+# Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-gdr%y)dd_+i&$#8!wf7zgd7mq8t=id0k@sq^skp6_lb8)tou54'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False  # Set to False for production
 
-ALLOWED_HOSTS = ['himanshuprojects.duckdns.org','51.20.128.222',]
-
+# Allowed Hosts - Add your production domain and IP address
+ALLOWED_HOSTS = ['himanshuprojects.duckdns.org', '13.60.224.68']
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -26,8 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'student_records',
-    'rest_framework',  # Make sure this is added
-    'rest_framework_simplejwt',  # Add the JWT authentication package
+    'rest_framework',  # Ensure this is added
+    'rest_framework_simplejwt',  # Add JWT authentication package
 ]
 
 MIDDLEWARE = [
@@ -59,21 +57,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Student_management_system.wsgi.application'
 
-
-# Database
+# Database Configuration (PostgreSQL)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'table1',
-        'USER': 'himanshu',
-        'PASSWORD': 'Welcome@001',
-        'HOST': 'localhost',
+        'NAME': 'table1',  # Change this to your database name
+        'USER': 'himanshu',  # Change this to your PostgreSQL user
+        'PASSWORD': 'Welcome@001',  # Use your actual database password
+        'HOST': 'localhost',  # In production, this might need to be the RDS endpoint
         'PORT': '5432',
     }
 }
 
-
-# Password validation
+# Password validation (consider using more strict validators in production)
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -89,29 +85,4 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
-
-
-# Static files
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# ✅ DRF Authentication/Permission Settings
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',  # Updated to JWTAuthentication
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',  # Ensures only authenticated users can access the API
-    ],
-}
-
-# Add any other necessary configurations if needed for your project.
+# International
