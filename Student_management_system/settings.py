@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-gdr%y)dd_+i&$#8!wf7zgd7mq8t=id0k@sq^skp6_lb8)tou54
 DEBUG = False  # Set to False for production
 
 # Allowed Hosts - Add your production domain and IP address
-ALLOWED_HOSTS = ['himanshuprojects.duckdns.org', '13.60.224.68']
+ALLOWED_HOSTS = ['himanshuprojects.duckdns.org', '51.20.128.222']
 
 # Application definition
 INSTALLED_APPS = [
@@ -85,4 +85,46 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# International
+# Internationalization settings
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'  # You may change this to the timezone of your choice
+USE_I18N = True
+USE_TZ = True
+
+# Static files (Important for deployment)
+STATIC_URL = '/static/'  # Ensure this is '/static/' for production
+
+# This will specify where the collected static files are stored
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# DRF Authentication/Permission Settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # Ensures only authenticated users can access the API
+    ],
+}
+
+# Enable secure cookies and ensure that they are only sent over HTTPS
+CSRF_COOKIE_SECURE = True  # Ensure this is True for production when using HTTPS
+SESSION_COOKIE_SECURE = True  # Ensure this is True for production when using HTTPS
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Ensure HTTP Strict Transport Security (HSTS) is enabled when using HTTPS
+SECURE_HSTS_SECONDS = 31536000  # A long time in seconds, e.g., 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Use this when deploying in production with HTTPS
+SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS in production
+
+# Enable clickjacking protection
+X_FRAME_OPTIONS = 'DENY'
+
+# Add other necessary configurations like logging, email settings, etc.
