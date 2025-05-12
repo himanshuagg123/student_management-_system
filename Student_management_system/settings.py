@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -7,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gdr%y)dd_+i&$#8!wf7zgd7mq8t=id0k@sq^skp6_lb8)tou54'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')  # Use environment variable for secret key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False  # Set to False for production
@@ -61,10 +62,10 @@ WSGI_APPLICATION = 'Student_management_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'table1',  # Change this to your database name
-        'USER': 'himanshu',  # Change this to your PostgreSQL user
-        'PASSWORD': 'Welcome@001',  # Use your actual database password
-        'HOST': 'localhost',  # In production, this might need to be the RDS endpoint
+        'NAME': os.getenv('DB_NAME', 'table1'),  # Use environment variable for DB name
+        'USER': os.getenv('DB_USER', 'himanshu'),  # Use environment variable for DB user
+        'PASSWORD': os.getenv('DB_PASSWORD', 'Welcome@001'),  # Use environment variable for DB password
+        'HOST': os.getenv('DB_HOST', 'localhost'),  # Use environment variable for DB host
         'PORT': '5432',
     }
 }
@@ -128,3 +129,31 @@ SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS in production
 X_FRAME_OPTIONS = 'DENY'
 
 # Add other necessary configurations like logging, email settings, etc.
+
+# Email settings (Optional)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # or your SMTP provider
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'your-email@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'your-email-password')
+
+# Logging settings (Optional but recommended for production)
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'django_errors.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
