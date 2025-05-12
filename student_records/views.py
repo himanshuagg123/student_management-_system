@@ -13,6 +13,10 @@ from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from .models import Student, Course, Teacher
 from .serializers import StudentSerializer, CourseSerializer, TeacherSerializer
+from django.contrib.auth import authenticate, login
+from rest_framework.views import APIView
+from django.http import JsonResponse
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 class StudentListView(APIView):
     def get(self, request):
@@ -145,3 +149,20 @@ class TeacherDetailView(APIView):
         teacher = self.get_object(pk)
         teacher.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+class LoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'message': 'Login successful'})
+        return JsonResponse({'error': 'Invalid credentials'}, status=400)
+
+class UserCheckView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return JsonResponse({'message': f'You are authenticated as {request.user.username}'})

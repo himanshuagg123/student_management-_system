@@ -1,7 +1,12 @@
 from django.urls import path
 from .views import StudentListView, CourseListView, TeacherListView, CourseDetailView, StudentDetailView, TeacherDetailView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
+    # JWT Authentication URLs
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
     # List views
     path('students/', StudentListView.as_view()),  # List of all students
     path('courses/', CourseListView.as_view()),  # List of all courses
