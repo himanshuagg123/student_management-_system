@@ -60,12 +60,12 @@ WSGI_APPLICATION = 'Student_management_system.wsgi.application'
 
 # Database Configuration (PostgreSQL)
 DATABASES = {
-    'default': {
+   'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'table1'),  # Use environment variable for DB name
-        'USER': os.getenv('DB_USER', 'himanshu'),  # Use environment variable for DB user
-        'PASSWORD': os.getenv('DB_PASSWORD', 'Welcome@001'),  # Use environment variable for DB password
-        'HOST': os.getenv('DB_HOST', 'localhost'),  # Use environment variable for DB host
+        'NAME': 'your_database_name',
+        'USER': 'himanshu',
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
