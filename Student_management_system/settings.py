@@ -123,7 +123,7 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
 # Use this when deploying in production with HTTPS
-SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS in production
+SECURE_SSL_REDIRECT = False  # Redirect HTTP to HTTPS in production
 
 # Enable clickjacking protection
 X_FRAME_OPTIONS = 'DENY'
