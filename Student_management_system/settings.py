@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')  # Use en
 DEBUG = False  # Set to False for production
 
 # Allowed Hosts - Add your production domain and IP address
-ALLOWED_HOSTS = ['himanshuprojects.duckdns.org', '51.20.128.222']
+ALLOWED_HOSTS = ['13.62.19.131', 'localhost', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
