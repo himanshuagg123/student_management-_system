@@ -18,6 +18,8 @@ from rest_framework.views import APIView
 from django.http import JsonResponse
 from rest_framework.permissions import AllowAny, IsAuthenticate
 from django.http import HttpResponsed
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
 
 class StudentListView(APIView):
     def get(self, request):
