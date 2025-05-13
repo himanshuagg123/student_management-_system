@@ -16,7 +16,8 @@ from .serializers import StudentSerializer, CourseSerializer, TeacherSerializer
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
 from django.http import JsonResponse
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticate
+from django.http import HttpResponsed
 
 class StudentListView(APIView):
     def get(self, request):
@@ -166,3 +167,8 @@ class UserCheckView(APIView):
 
     def get(self, request):
         return JsonResponse({'message': f'You are authenticated as {request.user.username}'})
+
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("Welcome to the Student Management System")
