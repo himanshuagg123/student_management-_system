@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Student, Course, Teacher
+from .models import Student, Course, Teacher, Mark,Attendance
 
 # Serializer for Course model
 class CourseSerializer(serializers.ModelSerializer):
@@ -32,3 +32,13 @@ class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
         fields = ['id', 'teacher_name', 'email_id', 'courses']
+
+class MarkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Mark
+        fields = '__all__'
+
+class AttendanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendance
+        fields = '__all__'

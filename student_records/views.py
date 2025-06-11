@@ -2,8 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
-from .models import Student, Course, Teacher
-from .serializers import StudentSerializer, CourseSerializer, TeacherSerializer
+from .models import Student, Course, Teacher,Mark,Attendance
+from .serializers import StudentSerializer, CourseSerializer, TeacherSerializer,MarkSerializer,AttendanceSerializer
 from django.db import IntegrityError
 
 # List & Create Views
@@ -16,9 +16,10 @@ from .serializers import StudentSerializer, CourseSerializer, TeacherSerializer
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
 from django.http import JsonResponse
-from rest_framework.permissions import AllowAny, IsAuthenticate
-from django.http import HttpResponsed
+# from rest_framework.permissions import AllowAny, IsAuthenticate
+from django.http import HttpResponse
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.contrib.auth.models import User
 
 
 class StudentListView(APIView):
@@ -174,3 +175,74 @@ from django.http import HttpResponse
 
 def home(request):
     return HttpResponse("Welcome to the Student Management System")
+
+
+
+class MarkEntryView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            teacher = Teacher.objects.get(user=request.user)
+        except Teacher.DoesNotExist:
+            return Response({"error": "Only teachers can add marks."}, status=status.HTTP_403_FORBIDDEN)
+
+        data = request.data.copy()
+        data['teacher'] = teacher.id  # Inject teacher ID
+
+        serializer = MarkSerializer(data=data)
+        if serializer.is_valid():
+            course = serializer.validated_data['course']
+            if course not in teacher.courses.all():
+                return Response({"error": "You are not assigned to this course."}, status=status.HTTP_403_FORBIDDEN)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AttendanceEntryView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            teacher = Teacher.objects.get(user=request.user)
+        except Teacher.DoesNotExist:
+            return Response({"error": "Only teachers can add attendance."}, status=status.HTTP_403_FORBIDDEN)
+
+        data = request.data.copy()
+        data['teacher'] = teacher.id  # Inject teacher ID
+
+        serializer = AttendanceSerializer(data=data)
+        if serializer.is_valid():
+            course = serializer.validated_data['course']
+            if course not in teacher.courses.all():
+                return Response({"error": "You are not assigned to this course."}, status=status.HTTP_403_FORBIDDEN)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class AllotCoursesToTeacherView(APIView):
+    permission_classes = [IsAuthenticated]  # You can change this to [IsAdminUser] if needed
+
+    def post(self, request):
+        teacher_id = request.data.get('teacher_id')
+        course_ids = request.data.get('course_ids')  # should be a list
+
+        if not isinstance(course_ids, list):
+            return Response({'error': 'course_ids must be a list.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            teacher = Teacher.objects.get(id=teacher_id)
+        except Teacher.DoesNotExist:
+            return Response({'error': 'Teacher not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        courses = Course.objects.filter(id__in=course_ids)
+
+        if not courses.exists():
+            return Response({'error': 'No valid courses found with given IDs.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        teacher.courses.set(courses)  # Overwrites previous assignments
+        teacher.save()
+
+        return Response({'message': 'Courses successfully allotted to teacher.'}, status=status.HTTP_200_OK)

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import StudentListView, CourseListView, TeacherListView, CourseDetailView, StudentDetailView, TeacherDetailView
+from .views import StudentListView, CourseListView, TeacherListView, CourseDetailView, StudentDetailView, TeacherDetailView, MarkEntryView,AttendanceEntryView,AllotCoursesToTeacherView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -15,5 +15,10 @@ urlpatterns = [
     # Detail views
     path('courses/<int:pk>/', CourseDetailView.as_view()),  
     path('students/<int:pk>/', StudentDetailView.as_view()),  
-    path('teachers/<int:pk>/', TeacherDetailView.as_view()),  
-]
+    path('teachers/<int:pk>/', TeacherDetailView.as_view()), 
+
+    path('marks/', MarkEntryView.as_view(), name='mark-entry'),
+    path('attendance/', AttendanceEntryView.as_view(), name='attendance-entry'),
+    path('allot-courses/', AllotCoursesToTeacherView.as_view(), name='allot-courses'),
+] 
+
