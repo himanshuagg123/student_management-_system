@@ -115,6 +115,8 @@ python manage.py createsuperuser
 Run the server
 
 python manage.py runserver
+
+
 🔄 Sample API Endpoints
 Endpoint	Method	Description
 /api/students/	GET/POST	List or add students
