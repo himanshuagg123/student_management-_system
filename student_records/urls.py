@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (TokenObtainPairView,
 from .views import (AllotCoursesToTeacherView, AttendanceEntryView,
                     CourseDetailView, CourseListView, MarkEntryView,
                     StudentDetailView, StudentListView, TeacherDetailView,
-                    TeacherListView)
+                    TeacherListView, ClassroomListView, ClassroomDetailView)
 
 urlpatterns = [
     # JWT Authentication URLs
@@ -28,4 +28,6 @@ urlpatterns = [
         "allot-courses/",
         AllotCoursesToTeacherView.as_view(),
         name="allot-courses"),
+    path('classrooms/', ClassroomListView.as_view()),
+    path('classrooms/<int:pk>/', ClassroomDetailView.as_view()),
 ]

@@ -13,7 +13,7 @@ SECRET_KEY = os.getenv(
 )  # Use environment variable for secret key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # Set to False for production
+DEBUG = True  # Set to False for production
 
 # Allowed Hosts - Add your production domain and IP address
 ALLOWED_HOSTS = ["13.62.19.131", "localhost", "127.0.0.1"]

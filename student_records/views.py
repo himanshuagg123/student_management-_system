@@ -15,6 +15,9 @@ from rest_framework.views import APIView
 from .models import Attendance, Course, Mark, Student, Teacher
 from .serializers import (AttendanceSerializer, CourseSerializer,
                           MarkSerializer, StudentSerializer, TeacherSerializer)
+from .models import Classroom
+from .serializers import ClassroomSerializer
+
 
 
 class StudentListView(APIView):
@@ -280,3 +283,45 @@ class AllotCoursesToTeacherView(APIView):
             {"message": "Courses successfully allotted to teacher."},
             status=status.HTTP_200_OK,
         )
+from .models import Classroom
+from .serializers import ClassroomSerializer
+
+class ClassroomListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        classrooms = Classroom.objects.all()
+        serializer = ClassroomSerializer(classrooms, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ClassroomSerializer(data=request.data)
+        if serializer.is_valid():
+            classroom = serializer.save()
+            return Response(ClassroomSerializer(classroom).data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ClassroomDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self, pk):
+        return get_object_or_404(Classroom, pk=pk)
+
+    def get(self, request, pk):
+        classroom = self.get_object(pk)
+        serializer = ClassroomSerializer(classroom)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        classroom = self.get_object(pk)
+        serializer = ClassroomSerializer(classroom, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        classroom = self.get_object(pk)
+        classroom.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

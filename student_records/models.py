@@ -19,6 +19,7 @@ class Student(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField()
     courses = models.ManyToManyField(Course)
+    classroom = models.ForeignKey("Classroom", related_name="students", on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
@@ -26,11 +27,7 @@ class Student(models.Model):
 
 # Teacher model
 class Teacher(models.Model):
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     teacher_name = models.CharField(max_length=100)
     email_id = models.EmailField(
         max_length=100, unique=True, default="no-email@example.com"
@@ -66,3 +63,12 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"{self.student.name} - {self.date} - {'Present' if self.is_present else 'Absent'}"
+
+
+class Classroom(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    coordinator = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
+    teachers = models.ManyToManyField(Teacher, related_name="classrooms")
+
+    def __str__(self):
+        return self.name
