@@ -117,15 +117,20 @@ Run the server
 python manage.py runserver
 
 
-🔄 Sample API Endpoints
-Endpoint	Method	Description
-/api/students/	GET/POST	List or add students
-/api/courses/	GET/POST	List or add courses
-/api/teachers/	GET/POST	List or add teachers
-/api/marks/	POST	Add marks (only assigned teacher)
-/api/attendance/	POST	Mark attendance (only assigned teacher)
-/api/login/	POST	User login
-/api/check-auth/	GET	Check user is authenticated
+### 🔄 Sample API Endpoints
+
+| Endpoint            | Method | Description                                   |
+|---------------------|--------|-----------------------------------------------|
+| `/api/students/`    | GET    | List all students                             |
+| `/api/students/`    | POST   | Add a new student                             |
+| `/api/courses/`     | GET    | List all courses                              |
+| `/api/courses/`     | POST   | Add a new course                              |
+| `/api/teachers/`    | GET    | List all teachers                             |
+| `/api/teachers/`    | POST   | Add a new teacher                             |
+| `/api/marks/`       | POST   | Add marks (only by the assigned teacher)      |
+| `/api/attendance/`  | POST   | Mark attendance (only by the assigned teacher)|
+| `/api/login/`       | POST   | User login                                    |
+| `/api/check-auth/`  | GET    | Check that the user is authenticated          |
 
 🧠 Skills Demonstrated
 Django REST Framework fundamentals
