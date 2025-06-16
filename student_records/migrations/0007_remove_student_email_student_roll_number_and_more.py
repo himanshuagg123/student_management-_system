@@ -6,37 +6,39 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('student_records', '0006_teacher_courses'),
+        ("student_records", "0006_teacher_courses"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='student',
-            name='email',
+            model_name="student",
+            name="email",
         ),
         migrations.AddField(
-            model_name='student',
-            name='roll_number',
-            field=models.CharField(default='0000', max_length=20, unique=True),
+            model_name="student",
+            name="roll_number",
+            field=models.CharField(default="0000", max_length=20, unique=True),
         ),
         migrations.AddField(
-            model_name='teacher',
-            name='email_id',
-            field=models.EmailField(default='no-email@example.com', max_length=100, unique=True),
+            model_name="teacher",
+            name="email_id",
+            field=models.EmailField(
+                default="no-email@example.com", max_length=100, unique=True
+            ),
         ),
         migrations.AlterField(
-            model_name='course',
-            name='course_code',
+            model_name="course",
+            name="course_code",
             field=models.CharField(max_length=10, unique=True),
         ),
         migrations.AlterField(
-            model_name='course',
-            name='course_name',
+            model_name="course",
+            name="course_name",
             field=models.CharField(max_length=100, unique=True),
         ),
         migrations.AlterField(
-            model_name='student',
-            name='age',
+            model_name="student",
+            name="age",
             field=models.IntegerField(),
         ),
     ]
