@@ -1,92 +1,86 @@
-🎓 Student Management System (Backend API)
+# 🎓 Student Management System (Backend API)
+
 A complete backend system built with Django and Django REST Framework that allows educational institutions to manage students, teachers, courses, attendance, and marks securely and efficiently.
 
-🚀 Project Overview
+---
+
+## 🚀 Project Overview
+
 The Student Management System helps schools or colleges automate the following tasks:
 
-📋 Register and manage students
-
-📘 Add and organize courses
-
-👨‍🏫 Create teachers and assign them to specific courses
-
-📝 Allow teachers to record marks for students only in the subjects they teach
-
-📅 Let teachers mark attendance per course
-
-🔐 Authenticate users and restrict sensitive operations to only authorized teachers
+- 📋 Register and manage students
+- 📘 Add and organize courses
+- 👨‍🏫 Create teachers and assign them to specific courses
+- 📝 Allow teachers to record marks for students only in the subjects they teach
+- 📅 Let teachers mark attendance per course
+- 🔐 Authenticate users and restrict sensitive operations to only authorized teachers
 
 This project mimics a real-world multi-role academic environment, applying proper data validation and access control.
 
-💡 Why I Built This Project
+---
+
+## 💡 Why I Built This Project
+
 I built this project to:
 
-Understand how to design relationships between real-world entities like students, teachers, and courses.
+- Understand how to design relationships between real-world entities like students, teachers, and courses.
+- Practice implementing authentication, role-based permissions, and data validation in a Django REST API.
+- Learn Django ORM and use it to create clean, efficient, and secure APIs.
+- Simulate a real-life academic system as found in schools, colleges, or coaching platforms.
 
-Practice implementing authentication, role-based permissions, and data validation in a Django REST API.
+---
 
-Learn Django ORM and use it to create clean, efficient, and secure APIs.
+## 🛠️ Tech Stack
 
-Simulate a real-life academic system as found in schools, colleges, or coaching platforms.
+| Layer            | Technology                      |
+|------------------|----------------------------------|
+| Backend          | Django, Django REST Framework   |
+| Authentication   | Django built-in auth system     |
+| Database         | SQLite (can be upgraded to PostgreSQL) |
+| API Testing      | Postman / Swagger UI            |
+| Version Control  | Git & GitHub                    |
+| Tools            | VSCode, Django Admin            |
 
-🛠️ Tech Stack
-Layer	Technology
-Backend	Django, Django REST Framework
-Authentication	Django built-in auth system
-Database	SQLite (can be upgraded to PostgreSQL)
-API Testing	Postman / Swagger UI
-Version Control	Git & GitHub
-Tools	VSCode, Django Admin
+---
 
-🧩 Features
-👨‍🎓 Students
-Add new students with unique roll numbers
+## 🧩 Features
 
-Update or delete existing student records
+### 👨‍🎓 Students
+- Add new students with unique roll numbers
+- Update or delete existing student records
+- Assign students to multiple courses
 
-Assign students to multiple courses
+### 📘 Courses
+- Add new courses with a unique course code
+- Update/delete courses
 
-📘 Courses
-Add new courses with a unique course code
+### 👨‍🏫 Teachers
+- Create teachers with unique email IDs
+- Assign them to specific courses
+- Only the assigned teachers can:
+  - Add marks for students in their courses
+  - Record attendance
 
-Update/delete courses
+### 📝 Marks
+- Only the teacher who teaches a course can give marks to students in that course
+- Stores student, course, teacher, marks, and date
 
-👨‍🏫 Teachers
-Create teachers with unique email IDs
+### 📅 Attendance
+- Teachers mark whether a student was present or absent for a course on a specific date
+- Role-checked to avoid unauthorized access
 
-Assign them to specific courses
+### 🔐 Authentication
+- Login API using Django’s authentication system
+- Access to sensitive views restricted to authenticated users (teachers)
 
-Only the assigned teachers can:
+---
 
-Add marks for students in their courses
+## 🔗 Data Relationships
 
-Record attendance
-
-📝 Marks
-Only the teacher who teaches a course can give marks to students in that course
-
-Stores student, course, teacher, marks, and date
-
-📅 Attendance
-Teachers mark whether a student was present or absent for a course on a specific date
-
-Role-checked to avoid unauthorized access
-
-🔐 Authentication
-Login API using Django’s authentication system
-
-Access to sensitive views restricted to authenticated users (teachers)
-
-🔗 Data Relationships
-A Student can take many Courses (ManyToMany)
-
-A Teacher can teach many Courses (ManyToMany)
-
-Marks and Attendance records link:
-
-1 student 🔗 1 course 🔗 1 teacher
-
-
+- A **Student** can take many **Courses** (ManyToMany)
+- A **Teacher** can teach many **Courses** (ManyToMany)
+- **Marks** and **Attendance** records link:
+  - 1 student 🔗 1 course 🔗 1 teacher
 ### ⚙️ Setup Instructions
 
 **1. Clone the repository**
