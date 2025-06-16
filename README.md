@@ -1,96 +1,155 @@
-# 🎓 Student Management System
+🎓 Student Management System (Backend API)
+A complete backend system built with Django and Django REST Framework that allows educational institutions to manage students, teachers, courses, attendance, and marks securely and efficiently.
 
-A basic Student Management System built using **Django** and **Django Rest Framework (DRF)**.
+🚀 Project Overview
+The Student Management System helps schools or colleges automate the following tasks:
 
----
+📋 Register and manage students
+
+📘 Add and organize courses
+
+👨‍🏫 Create teachers and assign them to specific courses
+
+📝 Allow teachers to record marks for students only in the subjects they teach
+
+📅 Let teachers mark attendance per course
+
+🔐 Authenticate users and restrict sensitive operations to only authorized teachers
+
+This project mimics a real-world multi-role academic environment, applying proper data validation and access control.
+
+💡 Why I Built This Project
+I built this project to:
+
+Understand how to design relationships between real-world entities like students, teachers, and courses.
+
+Practice implementing authentication, role-based permissions, and data validation in a Django REST API.
+
+Learn Django ORM and use it to create clean, efficient, and secure APIs.
+
+Simulate a real-life academic system as found in schools, colleges, or coaching platforms.
+
+🛠️ Tech Stack
+Layer	Technology
+Backend	Django, Django REST Framework
+Authentication	Django built-in auth system
+Database	SQLite (can be upgraded to PostgreSQL)
+API Testing	Postman / Swagger UI
+Version Control	Git & GitHub
+Tools	VSCode, Django Admin
+
+🧩 Features
+👨‍🎓 Students
+Add new students with unique roll numbers
+
+Update or delete existing student records
+
+Assign students to multiple courses
+
+📘 Courses
+Add new courses with a unique course code
+
+Update/delete courses
+
+👨‍🏫 Teachers
+Create teachers with unique email IDs
+
+Assign them to specific courses
+
+Only the assigned teachers can:
+
+Add marks for students in their courses
+
+Record attendance
+
+📝 Marks
+Only the teacher who teaches a course can give marks to students in that course
+
+Stores student, course, teacher, marks, and date
+
+📅 Attendance
+Teachers mark whether a student was present or absent for a course on a specific date
+
+Role-checked to avoid unauthorized access
+
+🔐 Authentication
+Login API using Django’s authentication system
+
+Access to sensitive views restricted to authenticated users (teachers)
+
+🔗 Data Relationships
+A Student can take many Courses (ManyToMany)
+
+A Teacher can teach many Courses (ManyToMany)
+
+Marks and Attendance records link:
+
+1 student 🔗 1 course 🔗 1 teacher
+
+
+⚙️ Setup Instructions
+Clone the repository
+
+
+git clone https://github.com/your-username/student-management-system.git
+cd student-management-system
+Create virtual environment
+
+
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+Install dependencies
+
+
+pip install -r requirements.txt
+Run migrations
 
 
 
-### ✅ Project Setup
-- Created a Django project named **Student Management System**
-- Created an app called `student_records`
+python manage.py makemigrations
+python manage.py migrate
+Create a superuser (admin)
 
----
 
-## 🧑‍🎓 Student Model
+python manage.py createsuperuser
+Run the server
 
-### Fields:
-- `name` (`CharField`)
-- `age` (`IntegerField`)
-- `email` (`EmailField`)
-- `courses` (`ManyToManyField` to Course)
+python manage.py runserver
+🔄 Sample API Endpoints
+Endpoint	Method	Description
+/api/students/	GET/POST	List or add students
+/api/courses/	GET/POST	List or add courses
+/api/teachers/	GET/POST	List or add teachers
+/api/marks/	POST	Add marks (only assigned teacher)
+/api/attendance/	POST	Mark attendance (only assigned teacher)
+/api/login/	POST	User login
+/api/check-auth/	GET	Check user is authenticated
 
-> Each student can enroll in multiple courses using the course ID and course name.
+🧠 Skills Demonstrated
+Django REST Framework fundamentals
 
-### APIs:
-- **GET**: `Student_details` – Fetch list of students
-- **POST**: `StudentDetailsPost` – Add new student with enrolled courses
+Role-based access control
 
----
+Object-relational mapping (ORM)
 
-## 📘 Course Model
+RESTful API design
 
-### Fields:
-- `course_name` (`CharField`)
-- `course_code` (`CharField`)
+Secure and modular backend development
 
-> Courses can be assigned to both students and teachers using many-to-many relationships.
+Real-world relationships and permissions (Student–Course–Teacher)
 
-### APIs:
-- **GET**: `course_Details` – Fetch list of courses
-- **POST**: `CourseDetailsPost` – Add new course to the system
+API authentication and session handling
 
----
+📸 Future Improvements
+Add Swagger/OpenAPI documentation
 
-## 👨‍🏫 Teacher Model
+Add student dashboard views
 
-### Fields:
-- `name` (`CharField`)
-- `courses` (`ManyToManyField` to Course)
+Implement JWT authentication
 
-> Each teacher can be assigned multiple courses.
+Export marks and attendance to Excel/PDF
 
-### APIs:
-- **GET**: Retrieve list of teachers and their assigned courses
-- **POST**: Add a new teacher and assign courses
+Frontend using React or Next.js
 
----
-
-## 🌐 URL Routing
-All APIs are properly routed through `urls.py` including:
-- Student API routes
-- Course API routes
-- Teacher API routes
-
----
-
-## 🧪 API Testing (Postman)
-- **GET Requests**: 
-  - Fetch all students, courses, and teachers
-- **POST Requests**: 
-  - Submit JSON data for students and teachers
-  - Assign courses using course IDs
-
----
-
-## 📚 Learning Note: DRF Serializers
-
-Initially, JSON was manually returned. Later, DRF serializers were introduced for cleaner code and better abstraction.
-
-### Serializer Benefits:
-- Convert model instances to Python datatypes
-- Render data into JSON
-- Validate incoming request data
-- Deserialize JSON into model instances
-
----
-
-## 🛠️ Tools & Technologies
-- Python 3.12
-- Django 5.2
-- Django REST Framework
-- Postman (for API testing)
-
----
-
-> Stay tuned for more features like attendance tracking, marks management, and admin controls!
+🙋‍♂️ Author
+Himanshu Aggarwal
