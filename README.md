@@ -87,34 +87,41 @@ Marks and Attendance records link:
 1 student 🔗 1 course 🔗 1 teacher
 
 
-⚙️ Setup Instructions
-Clone the repository
+### ⚙️ Setup Instructions
 
-
+**1. Clone the repository**
+```bash
 git clone https://github.com/your-username/student-management-system.git
 cd student-management-system
-Create virtual environment
+```
 
-
+**2. Create virtual environment**
+```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install dependencies
+source venv/bin/activate   # On Windows: venv\Scripts\activate
+```
 
-
+**3. Install dependencies**
+```bash
 pip install -r requirements.txt
-Run migrations
+```
 
-
-
+**4. Run migrations**
+```bash
 python manage.py makemigrations
 python manage.py migrate
-Create a superuser (admin)
+```
 
-
+**5. Create a superuser (admin)**
+```bash
 python manage.py createsuperuser
-Run the server
+```
 
+**6. Run the server**
+```bash
 python manage.py runserver
+```
+
 
 
 ### 🔄 Sample API Endpoints
